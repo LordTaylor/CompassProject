@@ -1,6 +1,5 @@
 package com.acante.compassproject.ui.compass_ui
 
-import android.view.animation.RotateAnimation
 import com.acante.compassproject.ui.base.BaseContract
 
 interface CompassContract: BaseContract {
@@ -14,5 +13,6 @@ interface CompassContract: BaseContract {
     interface Presenter:BaseContract.Presenter<View>{
         fun setTargetLongitude(longitude:Double)
         fun setTargetLatitude(latitude:Double)
+        fun stopWorker()
     }
 }

@@ -1,43 +1,32 @@
 package com.acante.compassproject.ui.compass_ui.ui_elements
 
-import java.text.FieldPosition
-
-class TargetArrow(var positionX: Double, var positionY: Double) {
+class TargetArrow(var tsrgetX: Double, var trgetY: Double) {
 
     var targetAngle: Double = 0.0
+        get() = targetAngle
     var currentAngle: Double = 0.0
+
+    var myPositionX: Double = 0.0
+    var myPositionY: Double = 0.0
+
     var roatationEasing = 10.0
 
     fun setTarget(targetX: Double, targetY: Double) {
-        positionY=targetY
-        positionX=targetX
+        this.trgetY = targetY
+        this.tsrgetX = targetX
     }
 
-    fun setMyLocation(myPositionX:Double,myPositionY: Double): Double{
-        var xDist =  positionX -myPositionX
-        var yDist =  positionY -myPositionY
+    fun setMyLocation(myPositionX: Double, myPositionY: Double): Double {
+        this.myPositionX = myPositionX
+        this.myPositionY = myPositionY
 
-        this.targetAngle = Math.atan2(yDist, xDist) - Math.PI / 2
+        var xDist = tsrgetX - myPositionX
+        var yDist = trgetY - myPositionY
 
-        this.currentAngle =
-            if (Math.abs(this.currentAngle) > Math.PI * 2) if (this.currentAngle < 0) this.currentAngle % Math.PI * 2 + Math.PI * 2 else this.currentAngle % Math.PI * 2 else this.currentAngle
-        this.targetAngle =
-            this.targetAngle + getAngle()
-        this.currentAngle =
-            this.currentAngle + (this.targetAngle - this.currentAngle) / roatationEasing  // give easing when rotation comes closer to the target point
+        this.targetAngle = Math.toDegrees(Math.atan2(xDist, yDist))
 
-
-        return Math.toDegrees(Math.atan2(xDist,yDist) )
+        return targetAngle
     }
 
-    private fun getAngle() :Double{
-        if (Math.abs(this.targetAngle - this.currentAngle) < Math.PI) {
-           return  0.0
-        }else if (this.targetAngle - this.currentAngle > 0) {
-           return -Math.PI * 2
-        }else{
-            return Math.PI * 2
-        }
-    }
 
 }

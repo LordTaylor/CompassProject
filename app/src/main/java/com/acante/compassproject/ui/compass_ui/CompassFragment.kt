@@ -8,17 +8,13 @@ import android.hardware.SensorManager
 import android.location.LocationManager
 import android.location.LocationProvider
 import android.os.Bundle
-import android.util.Log
-import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.RotateAnimation
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.acante.compassproject.R
 import kotlinx.android.synthetic.main.compass_fragment.*
-import kotlinx.coroutines.withContext
 
 
 class CompassFragment : Fragment(), CompassContract.View {
@@ -33,14 +29,15 @@ class CompassFragment : Fragment(), CompassContract.View {
 
     override fun onResume() {
         super.onResume()
-
         setUpSensors()
+
     }
 
     override fun onPause() {
         super.onPause()
         var sensorManager: SensorManager = activity!!.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensorManager.unregisterListener(presenter)
+        presenter.stopWorker()
     }
 
     private fun setUpSensors() {
@@ -49,18 +46,18 @@ class CompassFragment : Fragment(), CompassContract.View {
         sensorManager.registerListener(
             presenter,
             sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-            1000000,1000000
+            10000, 10000
         )
         sensorManager.registerListener(
             presenter,
             sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
-            1000000,1000000
+            10000, 10000
         )
         if (ContextCompat.checkSelfPermission(
                 activity!!, Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100000, 10f, presenter)
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 10f, presenter)
         }
     }
 
