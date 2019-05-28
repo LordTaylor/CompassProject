@@ -1,15 +1,21 @@
 package com.acante.compassproject.ui.compass_ui.ui_elements
 
+import java.text.FieldPosition
+
 class TargetArrow(var positionX: Double, var positionY: Double) {
 
     var targetAngle: Double = 0.0
     var currentAngle: Double = 0.0
     var roatationEasing = 10.0
 
-    fun setTarget(targetX: Double, targetY: Double): Double {
-        var xDist = targetX - positionX;
-        var yDist = targetY - positionY;
+    fun setTarget(targetX: Double, targetY: Double) {
+        positionY=targetY
+        positionX=targetX
+    }
 
+    fun setMyLocation(myPositionX:Double,myPositionY: Double): Double{
+        var xDist =  positionX -myPositionX
+        var yDist =  positionY -myPositionY
 
         this.targetAngle = Math.atan2(yDist, xDist) - Math.PI / 2
 
@@ -21,8 +27,7 @@ class TargetArrow(var positionX: Double, var positionY: Double) {
             this.currentAngle + (this.targetAngle - this.currentAngle) / roatationEasing  // give easing when rotation comes closer to the target point
 
 
-        return Math.toDegrees(currentAngle);
-
+        return Math.toDegrees(Math.atan2(xDist,yDist) )
     }
 
     private fun getAngle() :Double{

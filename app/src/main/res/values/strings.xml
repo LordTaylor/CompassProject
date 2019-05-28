@@ -2,4 +2,6 @@
     <string name="app_name">CompassProject</string>
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
+    <string name="my_location">My Location</string>
+    <string name="target_location">Target Location</string>
 </resources>
