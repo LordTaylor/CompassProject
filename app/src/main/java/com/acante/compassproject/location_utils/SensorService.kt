@@ -1,5 +1,6 @@
 package com.acante.compassproject.location_utils
 
+import android.app.IntentService
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -9,8 +10,14 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.location.LocationManager
 import android.os.IBinder
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.acante.compassproject.MainActivity
 
-class SensorService : Service() ,SensorEventListener{
+
+class SensorService : IntentService() ,SensorEventListener{
+    override fun onHandleIntent(intent: Intent?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     private val mGravity = FloatArray(3)
     private val mGeomagnetic = FloatArray(3)
@@ -21,6 +28,7 @@ class SensorService : Service() ,SensorEventListener{
     private var azimuthFix: Float = 0.toFloat()
 
     override fun onSensorChanged(event: SensorEvent?) {
+
         var alpha = 0.97f
         if (event!!.sensor.type == Sensor.TYPE_MAGNETIC_FIELD) {
             mGeomagnetic[0] = alpha * mGeomagnetic[0] + (1 - alpha) * event.values[0]
@@ -43,6 +51,15 @@ class SensorService : Service() ,SensorEventListener{
             azimuthFix = -azimuth
 
         }
+
+    }
+
+    private fun sendMessage() {
+        // The string "my-integer" will be used to filer the intent
+        val intent = Intent("my-integer")
+        // Adding some data
+        intent.putExtra("message", azimuthFix)
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {

@@ -44,21 +44,22 @@ class CompassPresenter : Presenter, LocationListener, SensorEventListener {
     override fun onAtach(view: View) {
         this.view = view
         work=true
-        thread{
-            while(work){
-                try {
-                    Thread.sleep(5000)
-
-                    view.updateNorth(azimuthFix)
-                    view.updateTarget(targetArrow.targetAngle+azimuthFix)
-                }catch (exeption:Exception){
-
-                }
-            }
-        }.start()
+//        thread{
+//            while(work){
+//                try {
+//                    Thread.sleep(5000)
+//
+//                    view.updateNorth(azimuthFix)
+//                    view.updateTarget(targetArrow.targetAngle+azimuthFix)
+//                }catch (exeption:Exception){
+//
+//                }
+//            }
+//        }.start()
     }
 
     override fun stopWorker() {
+
         work = false
     }
 

@@ -2,6 +2,7 @@ package com.acante.compassproject.ui.compass_ui
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorManager
@@ -29,15 +30,16 @@ class CompassFragment : Fragment(), CompassContract.View {
 
     override fun onResume() {
         super.onResume()
-        setUpSensors()
+//        setUpSensors()
+
 
     }
 
     override fun onPause() {
         super.onPause()
-        var sensorManager: SensorManager = activity!!.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        sensorManager.unregisterListener(presenter)
-        presenter.stopWorker()
+//        var sensorManager: SensorManager = activity!!.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+//        sensorManager.unregisterListener(presenter)
+//        presenter.stopWorker()
     }
 
     private fun setUpSensors() {
@@ -59,22 +61,23 @@ class CompassFragment : Fragment(), CompassContract.View {
         ) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 10f, presenter)
         }
+        var intent:Intent = Intent()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = CompassPresenter(context!!)
-        presenter.onAtach(this)
+//        presenter = CompassPresenter(context!!)
+//        presenter.onAtach(this)
         button_latitude.setOnClickListener {
             var text: String = edit_latitude.text.toString()
             if (text.isNotBlank()) {
-                presenter.setTargetLatitude(text.toDouble())
+//                presenter.setTargetLatitude(text.toDouble())
             }
         }
         button_longitude.setOnClickListener {
             var text: String = edit_longitude.text.toString()
             if (text.isNotBlank()) {
-                presenter.setTargetLongitude(text.toDouble())
+//                presenter.setTargetLongitude(text.toDouble())
             }
         }
     }
