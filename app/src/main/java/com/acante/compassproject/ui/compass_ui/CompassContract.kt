@@ -14,6 +14,5 @@ interface CompassContract: BaseContract {
     interface Presenter:BaseContract.Presenter<View>{
         fun setTargetLongitude(longitude:Double)
         fun setTargetLatitude(latitude:Double)
-        fun stopWorker()
     }
 }

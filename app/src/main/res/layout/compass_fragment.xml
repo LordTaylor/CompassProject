@@ -8,52 +8,78 @@
                                                    android:layout_height="match_parent">
 
     <LinearLayout
+
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="120dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/linearLayout3"
-    android:weightSum="1">
+            android:gravity="center"
+            android:weightSum="1">
         <LinearLayout
+                android:layout_margin="8dp"
+                android:background="@drawable/drawable_round_text"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-        android:layout_weight="0.5">
+                android:gravity="center"
+                android:layout_weight="0.5">
             <TextView
                     android:text="@string/my_location"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:id="@+id/textView5" android:gravity="center"/>
+                    android:layout_height="wrap_content" android:id="@+id/textView5" android:gravity="center"
+                    android:textColor="@color/colorAccent"
+                    style="@style/TextAppearance.AppCompat.Large"
+            />
             <TextView
-                    android:text="x : 0"
+                    android:text="@string/x_0"
+                    android:maxLength="15"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/text_my_x"
-                    android:gravity="center"/>
+                    android:textColor="@color/colorAccent"
+                    android:gravity="center"
+                    style="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"/>
             <TextView
-                    android:text="y : 0"
+                    android:text="@string/y_0"
+                    android:maxLength="15"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/text_my_y"
-                    android:gravity="center"/>
+                    android:textColor="@color/colorAccent"
+                    android:gravity="center"
+                    style="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"/>
         </LinearLayout>
         <LinearLayout
+                android:layout_margin="8dp"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-        android:layout_weight="0.5">
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:background="@drawable/drawable_round_text"
+        >
             <TextView
                     android:text="@string/target_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/textView6"
-            android:gravity="center"/>
+                    style="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@color/colorAccent"
+                    android:gravity="center"/>
             <TextView
-                    android:text="x : 0"
+                    android:text="@string/x_0"
+                    android:maxLength="15"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/text_target_x"
-                    android:gravity="center"/>
+                    android:textColor="@color/colorAccent"
+                    android:gravity="center"
+                    style="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"/>
             <TextView
-                    android:text="y : 0"
+                    android:text="@string/y_0"
+                    android:maxLength="15"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" android:id="@+id/text_target_y"
-                    android:gravity="center"/>
+                    android:textColor="@color/colorAccent"
+                    android:gravity="center"
+                    style="@style/TextAppearance.AppCompat.Light.SearchResult.Subtitle"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout android:layout_width="match_parent" android:layout_height="60dp"
@@ -61,22 +87,24 @@
                   app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
                   android:id="@+id/linearLayout2"
                   android:weightSum="1">
-        <EditText android:layout_width="0dp" android:layout_height="match_parent"
+        <EditText android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:textColorHint="@color/colorAccent"
                   android:id="@+id/edit_latitude" android:layout_weight="0.5"
                   android:hint="@string/latitude"
                   android:background="@drawable/drawable_round_edit_file"
                   android:gravity="center"
-                  android:inputType="numberSigned"
+                  android:inputType="number|numberDecimal"
                   android:layout_margin="5dp"/>
-        <EditText android:layout_width="0dp" android:layout_height="match_parent"
+        <EditText android:layout_width="0dp"
+                  android:layout_height="match_parent"
+                  android:textColorHint="@color/colorAccent"
                   android:id="@+id/edit_longitude" android:layout_weight="0.5"
                   android:hint="@string/longitude"
                   android:background="@drawable/drawable_round_edit_file"
                   android:gravity="center"
-                  android:inputType="numberSigned"
+                  android:inputType="number|numberDecimal|numberSigned"
                   android:layout_margin="5dp"/>
-
-
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
@@ -87,6 +115,7 @@
             android:id="@+id/linearLayout">
         <Button
                 android:text="@string/latitude"
+                android:textColor="@color/colorAccent"
                 android:background="@drawable/drawable_round_button"
                 android:layout_weight="0.5"
                 android:layout_width="0dp"
@@ -96,6 +125,7 @@
         />
         <Button
                 android:text="@string/longitude"
+                android:textColor="@color/colorAccent"
                 android:background="@drawable/drawable_round_button"
                 android:layout_weight="0.5"
                 android:layout_width="0dp"

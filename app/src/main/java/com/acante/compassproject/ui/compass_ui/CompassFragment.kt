@@ -1,12 +1,13 @@
 package com.acante.compassproject.ui.compass_ui
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.hardware.Sensor
 import android.hardware.SensorManager
 import android.location.LocationManager
-import android.location.LocationProvider
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,9 +21,10 @@ import kotlinx.android.synthetic.main.compass_fragment.*
 
 class CompassFragment : Fragment(), CompassContract.View {
     val TAG = "CompassFragment"
-    lateinit var locationProvider: LocationProvider
 
     lateinit var presenter: CompassPresenter
+    lateinit var sensorManager: SensorManager
+    lateinit var locationManager: LocationManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.compass_fragment, container, false)
@@ -36,14 +38,13 @@ class CompassFragment : Fragment(), CompassContract.View {
 
     override fun onPause() {
         super.onPause()
-        var sensorManager: SensorManager = activity!!.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        sensorManager = activity!!.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensorManager.unregisterListener(presenter)
-        presenter.stopWorker()
     }
 
     private fun setUpSensors() {
-        var locationManager: LocationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        var sensorManager: SensorManager = activity!!.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        locationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        sensorManager = activity!!.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         sensorManager.registerListener(
             presenter,
             sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
@@ -59,25 +60,44 @@ class CompassFragment : Fragment(), CompassContract.View {
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 10f, presenter)
+        } else {
+            text_my_x.text = getText(R.string.no_permision)
+            text_my_x.setTextColor(Color.RED)
+            text_my_y.text = getText(R.string.no_permision)
+            text_my_y.setTextColor(Color.RED)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        presenter = CompassPresenter(context!!)
+        presenter = CompassPresenter()
         presenter.onAtach(this)
         button_latitude.setOnClickListener {
-            var text: String = edit_latitude.text.toString()
+            val text: String = edit_latitude.text.toString()
             if (text.isNotBlank()) {
-                presenter.setTargetLatitude(text.toDouble())
+                presenter.setTargetLatitude(getDouble(text))
             }
         }
         button_longitude.setOnClickListener {
-            var text: String = edit_longitude.text.toString()
+            val text: String = edit_longitude.text.toString()
             if (text.isNotBlank()) {
-                presenter.setTargetLongitude(text.toDouble())
+                presenter.setTargetLongitude(getDouble(text))
             }
         }
+        edit_latitude.setOnEditorActionListener { textView, keyCode, keyEvent ->
+            presenter.setTargetLatitude(getDouble(textView.text.toString()))
+            true
+        }
+        edit_longitude.setOnEditorActionListener { textView, keyCode, keyEvent ->
+            presenter.setTargetLongitude(getDouble(textView.text.toString()))
+            true
+        }
+
+
+    }
+
+    private fun getDouble(string: String): Double {
+        return (string.toDoubleOrNull()) ?: return 0.0
     }
 
 
@@ -89,11 +109,13 @@ class CompassFragment : Fragment(), CompassContract.View {
         north_arrow_view.startAnimation(rotation)//rotation = rotation
     }
 
+    @SuppressLint("SetTextI18n")
     override fun displatyMyLocation(x: Double, y: Double) {
         text_my_x.text = "x : $x"
         text_my_y.text = "y : $y"
     }
 
+    @SuppressLint("SetTextI18n")
     override fun displayTargetLocation(x: Double, y: Double) {
         text_target_x.text = "x : $x"
         text_target_y.text = "y : $y"

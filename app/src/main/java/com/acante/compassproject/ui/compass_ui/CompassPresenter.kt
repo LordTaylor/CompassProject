@@ -1,6 +1,5 @@
 package com.acante.compassproject.ui.compass_ui
 
-import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -14,11 +13,9 @@ import android.view.animation.Animation
 import android.view.animation.RotateAnimation
 
 
-class CompassPresenter : Presenter, LocationListener, SensorEventListener {
+class CompassPresenter() : Presenter, LocationListener, SensorEventListener {
     val TAG: String = "CompassPresenter"
     lateinit var view: View
-    var work: Boolean = false
-    var context: Context
     var positionX: Double = 0.0
     var posittionY: Double = 0.0
 
@@ -35,20 +32,12 @@ class CompassPresenter : Presenter, LocationListener, SensorEventListener {
     private var azimuth: Float = 0.toFloat()
     private var azimuthFix: Float = 0.toFloat()
 
-    constructor(context: Context) {
-        this.context = context
+    init {
         targetArrow = TargetArrow(55.0, 22.0)
     }
 
-
     override fun onAtach(view: View) {
         this.view = view
-        work = true
-
-    }
-
-    override fun stopWorker() {
-        work = false
     }
 
     override fun setTargetLongitude(longitude: Double) {
