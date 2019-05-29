@@ -13,16 +13,15 @@ import android.view.animation.Animation
 import android.view.animation.RotateAnimation
 
 
-class CompassPresenter() : Presenter, LocationListener, SensorEventListener {
+class CompassPresenter : Presenter, LocationListener, SensorEventListener {
     val TAG: String = "CompassPresenter"
-    lateinit var view: View
-    var positionX: Double = 0.0
-    var posittionY: Double = 0.0
+    private lateinit var view: View
+    private var positionX: Double = 0.0
+    private var posittionY: Double = 0.0
 
-    var targetX: Double = 0.0
-    var targetY: Double = 0.0
-    var targetArrow: TargetArrow
-
+    private var targetX: Double = 0.0
+    private var targetY: Double = 0.0
+    private var targetArrow: TargetArrow = TargetArrow(55.0, 22.0)
 
     private val mGravity = FloatArray(3)
     private val mGeomagnetic = FloatArray(3)
@@ -32,21 +31,17 @@ class CompassPresenter() : Presenter, LocationListener, SensorEventListener {
     private var azimuth: Float = 0.toFloat()
     private var azimuthFix: Float = 0.toFloat()
 
-    init {
-        targetArrow = TargetArrow(55.0, 22.0)
-    }
-
-    override fun onAtach(view: View) {
+    override fun onAttach(view: View) {
         this.view = view
     }
 
-    override fun setTargetLongitude(longitude: Double) {
-        targetY = longitude
+    override fun setTargetLongitude(longitude: String) {
+        targetY = getDouble(longitude)
         updateTarget()
     }
 
-    override fun setTargetLatitude(latitude: Double) {
-        targetX = latitude
+    override fun setTargetLatitude(latitude: String) {
+        targetX = getDouble(latitude)
         updateTarget()
     }
 
@@ -67,7 +62,7 @@ class CompassPresenter() : Presenter, LocationListener, SensorEventListener {
     private fun updateMyLocation() {
         targetArrow.setMyPosition(positionX, posittionY)
         if (::view.isInitialized) {
-            view.displatyMyLocation(positionX, posittionY)
+            view.displayMyLocation(positionX, posittionY)
         }
     }
 
@@ -125,5 +120,9 @@ class CompassPresenter() : Presenter, LocationListener, SensorEventListener {
 
             }
         }
+    }
+
+    private fun getDouble(string: String): Double {
+        return (string.toDoubleOrNull()) ?: return 0.0
     }
 }

@@ -21,9 +21,7 @@ class TargetArrow(var tsrgetX: Double, var trgetY: Double) {
     private fun setMyLocation(): Double {
         val xDist = tsrgetX - myPositionX
         val yDist = trgetY - myPositionY
-
         this.targetAngle = Math.toDegrees(Math.atan2(xDist, yDist))
-
         return targetAngle
     }
 
