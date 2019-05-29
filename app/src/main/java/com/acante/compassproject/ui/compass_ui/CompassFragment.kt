@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.RotateAnimation
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.acante.compassproject.R
@@ -80,12 +81,12 @@ class CompassFragment : Fragment(), CompassContract.View {
     }
 
 
-    override fun updateTarget(target: Double) {
-        indycator_arrow_view.rotation = target.toFloat()
+    override fun updateTarget(target: RotateAnimation) {
+        indycator_arrow_view.startAnimation(target)//rotation = target.toFloat()
     }
 
-    override fun updateNorth(rotation: Float) {
-        north_arrow_view.rotation = rotation
+    override fun updateNorth(rotation: RotateAnimation) {
+        north_arrow_view.startAnimation(rotation)//rotation = rotation
     }
 
     override fun displatyMyLocation(x: Double, y: Double) {
