@@ -151,7 +151,7 @@
                    android:src="@drawable/indycator_arrow"/>
         <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
                    android:id="@+id/north_arrow_view"
-                   android:src="@drawable/north_arrow"
+                   android:src="@drawable/north_arrow_small"
         />
 
     </FrameLayout>

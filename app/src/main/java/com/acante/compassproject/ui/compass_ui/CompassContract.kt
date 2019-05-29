@@ -7,12 +7,12 @@ interface CompassContract: BaseContract {
     interface View:BaseContract.View {
         fun updateTarget(target: RotateAnimation)
         fun updateNorth(rotation: RotateAnimation)
-        fun displatyMyLocation(x:Double,y:Double)
+        fun displayMyLocation(x:Double, y:Double)
         fun displayTargetLocation(x:Double,y:Double)
     }
 
     interface Presenter:BaseContract.Presenter<View>{
-        fun setTargetLongitude(longitude:Double)
-        fun setTargetLatitude(latitude:Double)
+        fun setTargetLongitude(longitude: String)
+        fun setTargetLatitude(latitude: String)
     }
 }

@@ -71,46 +71,41 @@ class CompassFragment : Fragment(), CompassContract.View {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter = CompassPresenter()
-        presenter.onAtach(this)
+        presenter.onAttach(this)
         button_latitude.setOnClickListener {
             val text: String = edit_latitude.text.toString()
             if (text.isNotBlank()) {
-                presenter.setTargetLatitude(getDouble(text))
+                presenter.setTargetLatitude(text)
             }
         }
         button_longitude.setOnClickListener {
             val text: String = edit_longitude.text.toString()
             if (text.isNotBlank()) {
-                presenter.setTargetLongitude(getDouble(text))
+                presenter.setTargetLongitude(text)
             }
         }
         edit_latitude.setOnEditorActionListener { textView, keyCode, keyEvent ->
-            presenter.setTargetLatitude(getDouble(textView.text.toString()))
+            presenter.setTargetLatitude(textView.text.toString())
             true
         }
         edit_longitude.setOnEditorActionListener { textView, keyCode, keyEvent ->
-            presenter.setTargetLongitude(getDouble(textView.text.toString()))
+            presenter.setTargetLongitude(textView.text.toString())
             true
         }
 
 
     }
 
-    private fun getDouble(string: String): Double {
-        return (string.toDoubleOrNull()) ?: return 0.0
-    }
-
-
     override fun updateTarget(target: RotateAnimation) {
-        indycator_arrow_view.startAnimation(target)//rotation = target.toFloat()
+        indycator_arrow_view.startAnimation(target)
     }
 
     override fun updateNorth(rotation: RotateAnimation) {
-        north_arrow_view.startAnimation(rotation)//rotation = rotation
+        north_arrow_view.startAnimation(rotation)
     }
 
     @SuppressLint("SetTextI18n")
-    override fun displatyMyLocation(x: Double, y: Double) {
+    override fun displayMyLocation(x: Double, y: Double) {
         text_my_x.text = "x : $x"
         text_my_y.text = "y : $y"
     }
